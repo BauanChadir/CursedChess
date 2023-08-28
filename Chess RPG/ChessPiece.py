@@ -30,8 +30,8 @@ class ChessPiece:
         self.position = new_position
 
 class HybridPiece(ChessPiece):
-    def __init__(self, color, *pieces):
-        super().__init__(color, "rook")
+    def __init__(self, color, name, *pieces):
+        super().__init__(color, name)
         self.pieces = pieces
 
 
@@ -44,7 +44,7 @@ class HybridPiece(ChessPiece):
 
 class rook(ChessPiece):
     def __init__(self, color):
-        super().__init__(color, "rook")
+        super().__init__(color, "Rook")
 
     def is_valid_move(self, board, new_position):
 
@@ -57,7 +57,7 @@ class rook(ChessPiece):
 
 class knight(ChessPiece):
     def __init__(self,color):
-        super().__init__(color, "knight")
+        super().__init__(color, "Knight")
         
     def is_valid_move(self, board, new_position):
         if not super().is_valid_move(board,new_position):
@@ -71,7 +71,7 @@ class knight(ChessPiece):
     
 class bishop(ChessPiece):
     def __init__ (self, color):
-        super().__init__(color, "bishop")
+        super().__init__(color, "Bishop")
     
     def is_valid_move(self, board, new_position):
         if not super().is_valid_move(board,new_position):
@@ -86,7 +86,7 @@ class bishop(ChessPiece):
 
 class king(ChessPiece):
     def __init__ (self, color):
-        super().__init__(color, "king")
+        super().__init__(color, "King")
 
     def is_valid_move(self, board, new_position):
         if not super().is_valid_move(board,new_position):
@@ -97,7 +97,7 @@ class king(ChessPiece):
 
 class pawn(ChessPiece):
     def __init__(self,color):
-        super().__init__(color, "pawn")
+        super().__init__(color, "Pawn")
     
     def is_valid_move(self, board, new_position):
         if not super().is_valid_move(board,new_position):
@@ -115,11 +115,11 @@ class pawn(ChessPiece):
     
 class queen(HybridPiece):
     def __init__(self, color):
-        super().__init__(color, rook(color), bishop(color))
+        super().__init__(color, "Queen", rook(color), bishop(color))
 
 class checkers(ChessPiece):
     def __init__(self,color):
-        super().__init__(color, "checkers")
+        super().__init__(color, "Checkers")
     
     def is_valid_move(self, board, new_position):
         if not super().is_valid_move(board, new_position):
@@ -136,9 +136,9 @@ class checkers(ChessPiece):
         return False
 
 class banner(HybridPiece):
-    def __init__(self,color):
+    def __init__(self, color):
         self.buff = queen(color)
-        super().__init__(color, "pawn", king(color))
+        super().__init__(color, "banner", king(color))
     
     def is_valid_move(self, board, new_position):
         if not super().is_valid_move(board,new_position):

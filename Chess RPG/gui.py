@@ -1,4 +1,6 @@
 import sys
+import ChessPiece
+import Board
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout, QGridLayout
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
@@ -12,9 +14,9 @@ class ChessGUI(QMainWindow):
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
 
-        self.create_board()
+        self.create_board(Board.defaultSetup())
 
-    def create_board(self):
+    def create_board(self, board):
         layout = QGridLayout()
         self.central_widget.setLayout(layout)
 
@@ -29,21 +31,16 @@ class ChessGUI(QMainWindow):
                 square.setStyleSheet(f"background-color: {color};")
                 layout.addWidget(square, row, col)
 
-                if row == 0 or row == 7:
-                    label = QLabel(piece_labels[col], self)
-                    label.setAlignment(Qt.AlignCenter)
-                    label.setFont(QFont("Arial", 20, QFont.Bold))
-                    if color == "black":
-                        label.setStyleSheet("color: white;")
-                    layout.addWidget(label, row, col)
+        for piece in board:
+            label = QLabel(piece.type[0], self)
+            label.setAlignment(Qt.AlignCenter)
+            label.setFont(QFont("Arial", 20, QFont.Bold))
+            if not (piece.position[0]%2 == piece.position[1]%2):
+                label.setStyleSheet("color: white;")
+            layout.addWidget(label, piece.position[0], piece.position[1])
 
-                if row == 1 or row == 6:
-                    pawn_label = QLabel("P", self)
-                    pawn_label.setAlignment(Qt.AlignCenter)
-                    pawn_label.setFont(QFont("Arial", 20, QFont.Bold))
-                    if color == "black":
-                        pawn_label.setStyleSheet("color: white;")
-                    layout.addWidget(pawn_label, row, col)
+
+
 
     def run(self):
         self.show()
