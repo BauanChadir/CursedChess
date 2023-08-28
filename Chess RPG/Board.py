@@ -16,15 +16,15 @@ def get(board, pos):
         return None
 
 def are_touching(board, piece1, piece2):
-    piece1.position = position1
-    piece2.position = position2
+    position1 = piece1.position
+    position2 = piece2.position
     if (position1[0]-1 <= position2[0] <= position1[0]+1) and (position1[1]-1 <= position2[1] <= position1[1]+1):
         return True
     return False
 
 def are_touching_othogonally(board, piece1, piece2):
-    piece1.position = position1
-    piece2.position = position2
+    position1 = piece1.position
+    position2 = piece2.position
     if (position1[0]-1 <= position2[0] <= position1[0]+1) != (position1[1]-1 <= position2[1] <= position1[1]+1):
         return True
     return False

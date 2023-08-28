@@ -144,7 +144,6 @@ class banner(HybridPiece):
     def on_move(self, board, target_pos):
         for piece in board:
             next_to_start = Board.touches(self, piece)
-            next_to_end = 
             
 
         return board
