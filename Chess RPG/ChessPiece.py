@@ -23,7 +23,7 @@ class ChessPiece:
     def is_valid_move(self, board, new_position):
         return (0 <= new_position[0] < Board.board_size_x and 0 <= new_position[1] < Board.board_size_y) and not (new_position == self.position)
 
-    def on_move(board, target_pos):
+    def on_move(self, board, target_pos):
         return board
 
     def put(self, new_position):
@@ -119,10 +119,10 @@ class queen(HybridPiece):
 
 class checkers(ChessPiece):
     def __init__(self,color):
-        super().__init__(color, "pawn")
+        super().__init__(color, "checkers")
     
     def is_valid_move(self, board, new_position):
-        if not super().is_valid_move(board,new_position):
+        if not super().is_valid_move(board, new_position):
             return False
 
         target1 = (self.position[0] + 2, self.position[1] + 2) 
@@ -130,6 +130,8 @@ class checkers(ChessPiece):
         target3 = (self.position[0] + 1, self.position[1] + 1) 
         target4 = (self.position[0] - 1, self.position[1] - 1) 
         if (new_position == target1 and Board.has_obstacle(board, target3)) or (new_position == target2 and Board.has_obstacle(board, target4)):
+            return True
+        if (new_position == target3 and not Board.has_obstacle(board, target3)) or (new_position == target4 and not Board.has_obstacle(board, target4)):
             return True
         return False
 
