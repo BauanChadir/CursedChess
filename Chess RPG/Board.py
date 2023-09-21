@@ -17,13 +17,17 @@ def get(board, pos):
         return None
 
 def are_touching(piece1, piece2):
+    if piece1 == piece2:
+        return False
     position1 = piece1.position
     position2 = piece2.position
     if (position1[0]-1 <= position2[0] <= position1[0]+1) and (position1[1]-1 <= position2[1] <= position1[1]+1):
         return True
     return False
 
-def are_touching_othogonally(board, piece1, piece2):
+def are_touching_othogonally(piece1, piece2):
+    if piece1 == piece2:
+        return False
     position1 = piece1.position
     position2 = piece2.position
     if (position1[0]-1 <= position2[0] <= position1[0]+1) != (position1[1]-1 <= position2[1] <= position1[1]+1):
@@ -32,13 +36,7 @@ def are_touching_othogonally(board, piece1, piece2):
 
 def move(board, piece, endpos):
 
-    can_because_of_buff = False
-
-    for buff in piece.movement_buff:
-        if buff.piece.is_valid_move(board, endpos):
-            can_because_of_buff = True
-
-    if (not piece.is_valid_move(board, endpos)) and (not can_because_of_buff):
+    if (not piece.is_valid_move(board, endpos)):
         print("Move from " + str(piece.position) + " to " + str(endpos) + " is not valid for " + str(piece.type))
         return board
 
@@ -50,7 +48,17 @@ def move(board, piece, endpos):
             break
 
     piece.position = endpos
+
+    for piece in board:
+        piece.movement_buffs = []
+
+    sync_pieces(board)
+
     return board
+
+def sync_pieces(board):
+    for piece in board:
+        piece.sync(board)
 
 def get_names(board):
     l = []

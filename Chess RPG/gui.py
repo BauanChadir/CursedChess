@@ -20,8 +20,6 @@ class ChessGUI(QMainWindow):
         layout = QGridLayout()
         self.central_widget.setLayout(layout)
 
-        piece_labels = ["R", "N", "B", "Q", "K", "B", "N", "R"]
-
         for row in range(8):
             for col in range(8):
                 color = "white" if (row + col) % 2 == 0 else "black"
